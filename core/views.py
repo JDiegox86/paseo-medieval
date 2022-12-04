@@ -230,7 +230,6 @@ class VentasList(APIView):
         serVentas.save()
         return Response(VentasSerializer.data)
 
-
 class VentasDetail(APIView):
     def get(self, request, id_ventas):
         dataVentas = Ventas.objects.get(pk=id_ventas)
