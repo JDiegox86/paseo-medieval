@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import User
 
 
@@ -14,21 +11,18 @@ class Usuarios(models.Model):
         (FEMENINO, 'Femenino'),
         (MASCULINO, 'Masculino'),
     ]
-    dni = models.IntegerField(max_length=8)
+    id_registro = models.AutoField(primary_key=True)
+    dni = models.IntegerField()
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=40)
     correo = models.CharField(max_length=40)
-    celular = models.IntegerField(max_length=9)
+    celular = models.IntegerField()
     direccion = models.CharField(max_length=50)
     distrito = models.CharField(max_length=30)
     genero = models.CharField(max_length=10, choices=GENERO_CHOICES)
 
     def __str__(self):
         return self.nombre
-
-    class Meta:
-        verbose_name = 'usuarios'
-        db_table = 'usuarios'
 
 
 class Roles(models.Model):
@@ -43,16 +37,12 @@ class Roles(models.Model):
     ]
     id_rol = models.AutoField(primary_key=True)
     cargo = models.CharField(max_length=45, choices=CARGOS_CHOICES)
-    id_usuario = models.ForeignKey(Usuarios, models.DO_NOTHING, db_column='id_usuario')
+    id_usuario = models.IntegerField()
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=50)
 
     def __str__(self):
         return self.id_rol
-
-    class Meta:
-        verbose_name = 'roles'
-        db_table = 'roles'
 
 
 class Productos(models.Model):
@@ -61,25 +51,21 @@ class Productos(models.Model):
     CRITICO = 'Critico'
 
     ESTADO_CHOICES = [
-        (BIEN, 'Poco'),
+        (BIEN, 'Bien'),
         (MAL, 'Mal'),
         (CRITICO, 'Critico'),
     ]
     id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30)
-    codigo = models.IntegerField(max_length=30)
+    codigo = models.IntegerField()
     fecha_creacion = models.DateField(max_length=30)
     fecha_vencimiento = models.DateField(max_length=30)
-    precio_venta = models.IntegerField(max_length=30)
-    precio_costo = models.IntegerField(max_length=30)
+    precio_venta = models.IntegerField()
+    precio_costo = models.IntegerField()
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES)
 
     def __str__(self):
         return self.id_producto
-
-    class Meta:
-        verbose_name = 'productos'
-        db_table = 'productos'
 
 
 class RegistroClienteTienda(models.Model):
@@ -92,18 +78,13 @@ class RegistroClienteTienda(models.Model):
     ]
     id_cli = models.AutoField(primary_key=True)
     tipo_pago = models.CharField(max_length=15, choices=TIPO_PAGO_CHOICES)
-    dni = models.IntegerField(max_length=8)
+    dni = models.IntegerField()
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=30)
     distrito = models.CharField(max_length=30)
 
     def __str__(self):
         return self.id_cli
-
-    class Meta:
-        verbose_name = 'registroclientetienda'
-        db_table = 'registroclientetienda'
-
 
 
 class Tiendas(models.Model):
@@ -125,10 +106,6 @@ class Tiendas(models.Model):
     def __str__(self):
         return self.id_tienda
 
-    class Meta:
-        verbose_name = 'tiendas'
-        db_table = 'tiendas'
-
 
 class Ventas(models.Model):
     TARGETA = 'Targeta'
@@ -142,11 +119,11 @@ class Ventas(models.Model):
     monto_total = models.FloatField()
     id_cli = models.ForeignKey(RegistroClienteTienda, models.DO_NOTHING, db_column='id_cli')
     nombres_cli = models.CharField(max_length=45)
-    dni_cli = models.IntegerField(max_length=8)
+    dni_cli = models.IntegerField()
     tipo_pago = models.CharField(max_length=15)
     numero_boleta = models.CharField(max_length=15)
     fecha_pago = models.DateField()
-    ruc = models.IntegerField(max_length=20)
+    ruc = models.IntegerField()
     igb = models.IntegerField()
     nombre_producto = models.ForeignKey(Productos, models.DO_NOTHING, db_column='nombre')
     nombres = models.CharField(max_length=45)
@@ -154,7 +131,3 @@ class Ventas(models.Model):
 
     def __str__(self):
         return self.nombres_cli
-
-    class Meta:
-        verbose_name = 'ventas'
-        db_table = 'ventas'

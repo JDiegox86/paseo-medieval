@@ -2,7 +2,7 @@ from django import views
 from django.urls import path
 from . import views
 
-app_name = "core"
+app_name = "paseo_central"
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -18,11 +18,13 @@ urlpatterns = [
 
     # usuarios
     path('usuarios', views.UsuariosList.as_view(), name='usuarios'),
-    path('usuarios/<int:id_usuarios>', views.UsuariosDetail.as_view()),
+    # path('usuarios/user',views.UsuariosByUser.as_view(), name='usuarios_user'),
+    path('usuarios/user/edit', views.UsuariosEdit.as_view(), name='user_edit'),
 
     # roles
     path('roles', views.RolesList.as_view(), name='roles'),
-    path('usuarios/<int:id_rol>', views.RolesDetail.as_view()),
+    # path('roles/cargos',views.RolesByUsuarios.as_view(), name='roles_cargos'),
+    path('roles/edit', views.RolesEdit.as_view(), name='roles_edit'),
 
     # producto
     path('productos', views.ProductosList.as_view(), name='productos'),

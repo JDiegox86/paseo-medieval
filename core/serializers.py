@@ -31,8 +31,7 @@ class UsuariosSerializer(serializers.ModelSerializer):
 class RolesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roles
-        fields = ('id_rol', 'cargo', 'id_usuario',
-                  'nombre', 'apellidos')
+        fields = '__all__'
 
 
 class ProductosSerializer(serializers.ModelSerializer):
