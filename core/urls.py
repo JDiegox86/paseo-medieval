@@ -18,13 +18,11 @@ urlpatterns = [
 
     # usuarios
     path('usuarios', views.UsuariosList.as_view(), name='usuarios'),
-    # path('usuarios/user',views.UsuariosByUser.as_view(), name='usuarios_user'),
-    path('usuarios/user/edit', views.UsuariosEdit.as_view(), name='user_edit'),
+    path('usuarios/<int:id_usuarios>', views.UsuariosDetail.as_view()),
 
     # roles
     path('roles', views.RolesList.as_view(), name='roles'),
-    # path('roles/cargos',views.RolesByUsuarios.as_view(), name='roles_cargos'),
-    path('roles/edit', views.RolesEdit.as_view(), name='roles_edit'),
+    path('usuarios/<int:id_rol>', views.RolesDetail.as_view()),
 
     # producto
     path('productos', views.ProductosList.as_view(), name='productos'),

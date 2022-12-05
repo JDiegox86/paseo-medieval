@@ -1,4 +1,7 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
 from django.contrib.auth.models import User
 
 
@@ -11,12 +14,11 @@ class Usuarios(models.Model):
         (FEMENINO, 'Femenino'),
         (MASCULINO, 'Masculino'),
     ]
-    id_registro = models.AutoField(primary_key=True)
-    dni = models.IntegerField()
+    dni = models.IntegerField(max_length=8)
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=40)
     correo = models.CharField(max_length=40)
-    celular = models.IntegerField()
+    celular = models.IntegerField(max_length=9)
     direccion = models.CharField(max_length=50)
     distrito = models.CharField(max_length=30)
     genero = models.CharField(max_length=10, choices=GENERO_CHOICES)
@@ -41,7 +43,7 @@ class Roles(models.Model):
     ]
     id_rol = models.AutoField(primary_key=True)
     cargo = models.CharField(max_length=45, choices=CARGOS_CHOICES)
-    id_usuario = models.IntegerField()
+    id_usuario = models.ForeignKey(Usuarios, models.DO_NOTHING, db_column='id_usuario')
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=50)
 
@@ -59,17 +61,17 @@ class Productos(models.Model):
     CRITICO = 'Critico'
 
     ESTADO_CHOICES = [
-        (BIEN, 'Bien'),
+        (BIEN, 'Poco'),
         (MAL, 'Mal'),
         (CRITICO, 'Critico'),
     ]
     id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30)
-    codigo = models.IntegerField()
+    codigo = models.IntegerField(max_length=30)
     fecha_creacion = models.DateField(max_length=30)
     fecha_vencimiento = models.DateField(max_length=30)
-    precio_venta = models.IntegerField()
-    precio_costo = models.IntegerField()
+    precio_venta = models.IntegerField(max_length=30)
+    precio_costo = models.IntegerField(max_length=30)
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES)
 
     def __str__(self):
@@ -78,6 +80,7 @@ class Productos(models.Model):
     class Meta:
         verbose_name = 'productos'
         db_table = 'productos'
+
 
 class RegistroClienteTienda(models.Model):
     TARGETA = 'Targeta'
@@ -89,7 +92,7 @@ class RegistroClienteTienda(models.Model):
     ]
     id_cli = models.AutoField(primary_key=True)
     tipo_pago = models.CharField(max_length=15, choices=TIPO_PAGO_CHOICES)
-    dni = models.IntegerField()
+    dni = models.IntegerField(max_length=8)
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=30)
     distrito = models.CharField(max_length=30)
@@ -100,6 +103,7 @@ class RegistroClienteTienda(models.Model):
     class Meta:
         verbose_name = 'registroclientetienda'
         db_table = 'registroclientetienda'
+
 
 
 class Tiendas(models.Model):
@@ -138,11 +142,11 @@ class Ventas(models.Model):
     monto_total = models.FloatField()
     id_cli = models.ForeignKey(RegistroClienteTienda, models.DO_NOTHING, db_column='id_cli')
     nombres_cli = models.CharField(max_length=45)
-    dni_cli = models.IntegerField()
+    dni_cli = models.IntegerField(max_length=8)
     tipo_pago = models.CharField(max_length=15)
     numero_boleta = models.CharField(max_length=15)
     fecha_pago = models.DateField()
-    ruc = models.IntegerField()
+    ruc = models.IntegerField(max_length=20)
     igb = models.IntegerField()
     nombre_producto = models.ForeignKey(Productos, models.DO_NOTHING, db_column='nombre')
     nombres = models.CharField(max_length=45)
