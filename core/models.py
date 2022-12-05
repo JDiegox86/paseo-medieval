@@ -24,6 +24,10 @@ class Usuarios(models.Model):
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        verbose_name = 'usuarios'
+        db_table = 'usuarios'
+
 
 class Roles(models.Model):
     ADMINISTRADOR_GENERAL = 'administrador general'
@@ -43,6 +47,10 @@ class Roles(models.Model):
 
     def __str__(self):
         return self.id_rol
+
+    class Meta:
+        verbose_name = 'roles'
+        db_table = 'roles'
 
 
 class Productos(models.Model):
@@ -67,6 +75,9 @@ class Productos(models.Model):
     def __str__(self):
         return self.id_producto
 
+    class Meta:
+        verbose_name = 'productos'
+        db_table = 'productos'
 
 class RegistroClienteTienda(models.Model):
     TARGETA = 'Targeta'
@@ -85,6 +96,10 @@ class RegistroClienteTienda(models.Model):
 
     def __str__(self):
         return self.id_cli
+
+    class Meta:
+        verbose_name = 'registroclientetienda'
+        db_table = 'registroclientetienda'
 
 
 class Tiendas(models.Model):
@@ -105,6 +120,10 @@ class Tiendas(models.Model):
 
     def __str__(self):
         return self.id_tienda
+
+    class Meta:
+        verbose_name = 'tiendas'
+        db_table = 'tiendas'
 
 
 class Ventas(models.Model):
@@ -131,3 +150,7 @@ class Ventas(models.Model):
 
     def __str__(self):
         return self.nombres_cli
+
+    class Meta:
+        verbose_name = 'ventas'
+        db_table = 'ventas'
