@@ -2,7 +2,7 @@ from django import views
 from django.urls import path
 from . import views
 
-app_name = "paseo_central"
+app_name = "core"
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
